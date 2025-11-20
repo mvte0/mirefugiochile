@@ -31,6 +31,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'acerca' %}">Acerca de</a></li>
 
         {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'payments:historial' %}">Mis donaciones</a></li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="cuentaMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ user.first_name|default:user.username }}

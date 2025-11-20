@@ -10,14 +10,22 @@
             <h4 class="alert-heading">¡Gracias por tu donación!</h4>
             <p>Tu pago fue autorizado.</p>
           </div>
-          {% if result %}
-            <ul class="list-group">
-              <li class="list-group-item"><strong>Orden:</strong> {{ result.buy_order }}</li>
-              <li class="list-group-item"><strong>Código autorización:</strong> {{ result.authorization_code }}</li>
-              <li class="list-group-item"><strong>Monto:</strong> ${{ result.amount }}</li>
-              <li class="list-group-item"><strong>Método:</strong> {{ result.payment_type_code }}</li>
-            </ul>
-          {% endif %}
+          <div class="row g-3">
+            <div class="col-md-6">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between"><span>Orden</span><strong>{{ result.buy_order }}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Monto</span><strong>${{ result.amount }}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Estado</span><span class="badge bg-success">Autorizado</span></li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between"><span>Código autorización</span><strong>{{ result.authorization_code }}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Método</span><strong>{{ result.payment_type_code }}</strong></li>
+                <li class="list-group-item d-flex justify-content-between"><span>Cuotas</span><strong>{{ result.installments_number|default:"-" }}</strong></li>
+              </ul>
+            </div>
+          </div>
         {% elif aborted %}
           <div class="alert alert-warning">
             <h4 class="alert-heading">Pago cancelado</h4>
@@ -32,7 +40,10 @@
             <pre class="bg-light p-3 rounded">{{ result|safe }}</pre>
           {% endif %}
         {% endif %}
-        <a href="{% url 'home' %}" class="btn btn-outline-secondary mt-3">Volver al inicio</a>
+        <div class="d-flex gap-2 mt-4">
+          <a href="{% url 'payments:historial' %}" class="btn btn-mr">Ver historial</a>
+          <a href="{% url 'home' %}" class="btn btn-outline-secondary">Volver al inicio</a>
+        </div>
       </div>
     </div>
   </div>

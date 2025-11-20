@@ -168,7 +168,11 @@ def webpay_return(request):
         ]
     )
 
-    return render(request, "donations/result.html", {"ok": ok, "result": result})
+    return render(
+        request,
+        "donations/result.html",
+        {"ok": ok, "result": result, "donation": donation},
+    )
 
 
 def webpay_status(request):
@@ -185,3 +189,13 @@ def webpay_status(request):
         return JsonResponse({"error": str(exc)}, status=400)
 
     return JsonResponse(data)
+
+
+@login_required(login_url="login")
+def donation_history(request):
+    """Listado de donaciones del usuario autenticado."""
+    cliente = getattr(request.user, "cliente", None)
+    qs = Donation.objects.none()
+    if cliente:
+        qs = Donation.objects.filter(cliente=cliente).order_by("-created_at")
+    return render(request, "donations/history.html", {"donations": qs})
