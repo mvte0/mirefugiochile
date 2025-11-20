@@ -195,7 +195,7 @@ TBK_API_KEY_SECRET = env(
 TBK_ENV = env("TBK_ENV", default="integration")  # integration | production
 TBK_RETURN_URL = env(
     "TBK_RETURN_URL",
-    default="http://localhost:8000/donar/retorno/",
+    default="https://mi-refugio-web.onrender.com/donar/retorno/",
 )
 
 # --------------------------------------------------------------------------------------
