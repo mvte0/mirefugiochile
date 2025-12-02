@@ -131,7 +131,7 @@ def webpay_return(request):
     if tbk_token or tbk_order or tbk_session:
         if tbk_order:
             Donation.objects.filter(buy_order=tbk_order).update(status="aborted")
-        return render(request, "donations/result.html", {"ok": False, "aborted": True})
+        return render(request, "donations/failure.html", {"aborted": True})
 
     if not token:
         return HttpResponseBadRequest("Token faltante")
@@ -148,7 +148,7 @@ def webpay_return(request):
         logger.exception("Error confirmando transaccion Webpay.")
         donation.status = "failed"
         donation.save(update_fields=["status"])
-        return render(request, "donations/result.html", {"ok": False, "error": "commit_failed"})
+        return render(request, "donations/failure.html", {"error": "Error de comunicación con Webpay"})
 
     status_raw = (result.get("status") or "").upper()
     ok = status_raw == "AUTHORIZED"
@@ -168,11 +168,10 @@ def webpay_return(request):
         ]
     )
 
-    return render(
-        request,
-        "donations/result.html",
-        {"ok": ok, "result": result, "donation": donation},
-    )
+    if ok:
+        return render(request, "donations/success.html", {"donation": donation})
+    
+    return render(request, "donations/failure.html", {"error": "El pago fue rechazado por el banco", "result": result})
 
 
 def webpay_status(request):

@@ -27,6 +27,7 @@ urlpatterns = [
     path("", landing, name="home"),
     path("", include("core.urls")),       # raíz y API de contacto
     path("donar/", include(("payments.urls", "payments"), namespace="payments")),   # donaciones Webpay
+    path("pagos/", include(("payments.urls", "payments"), namespace="payments_alias")), # Alias para compatibilidad con prod
     path("accounts/login/", LoginViewRemember.as_view(template_name="registration/login.html"), name="login"),
     path("accounts/logout/", logout_then_home, name="logout"),
     path("accounts/", include("django.contrib.auth.urls")),

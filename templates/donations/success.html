@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}¡Gracias! | Mi Refugio{% endblock %}
+{% block content %}
+<section class="py-5">
+  <div class="container" style="max-width: 800px;">
+    <div class="card shadow-lg border-0">
+      <div class="card-body p-5 text-center">
+        <div class="mb-4 text-success">
+          <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+          </svg>
+        </div>
+        <h2 class="card-title mb-3">¡Gracias por tu donación!</h2>
+        <p class="card-text lead text-muted mb-4">Tu aporte es fundamental para seguir construyendo Mi Refugio.</p>
+        
+        <div class="card bg-light border-0 mb-4 text-start">
+          <div class="card-body">
+            <h5 class="card-title border-bottom pb-2 mb-3">Detalles de la transacción</h5>
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <small class="text-muted d-block">Orden de Compra</small>
+                <strong>{{ donation.buy_order }}</strong>
+              </div>
+              <div class="col-md-6 mb-2">
+                <small class="text-muted d-block">Monto</small>
+                <strong>${{ donation.amount }}</strong>
+              </div>
+              <div class="col-md-6 mb-2">
+                <small class="text-muted d-block">Código de Autorización</small>
+                <strong>{{ donation.authorization_code }}</strong>
+              </div>
+              <div class="col-md-6 mb-2">
+                <small class="text-muted d-block">Fecha</small>
+                <strong>{{ donation.created_at|date:"d/m/Y H:i" }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          <a href="{% url 'home' %}" class="btn btn-primary btn-lg px-4 gap-3">Volver al Inicio</a>
+          <a href="{% url 'payments:historial' %}" class="btn btn-outline-secondary btn-lg px-4">Ver Historial</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
